@@ -1,0 +1,16 @@
+﻿using Orders.Shared.DTOs;
+using Orders.Shared.Entites;
+using Orders.Shared.Responses;
+
+namespace Orders.Backend.Repositories.Interfaces
+{
+    public interface ICountriesRepository
+    {
+        Task<ActionResponse<IEnumerable<Country>>> GetAsync(PaginationDTO pagination);
+
+        Task<ActionResponse<Country>> GetAsync(int id);
+
+        Task<ActionResponse<IEnumerable<Country>>> GetAsync();
+
+    }
+}
