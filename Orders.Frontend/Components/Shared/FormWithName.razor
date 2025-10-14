@@ -1,0 +1,36 @@
+﻿
+@typeparam TModel where TModel : IEntityWithName
+
+<EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <MudTextField Label="@Label"
+                  @bind-Value="@Model.Name"
+                  For="@(() => Model.Name)"
+                  Class="mb-4" />
+    <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.ArrowBack" Color="Color.Info" OnClick="ReturnAction">
+        Regresar
+    </MudButton>
+    <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Check" Color="Color.Primary" ButtonType="ButtonType.Submit">
+        Guardar
+    </MudButton>
+</EditForm>
+
+
+@code {
+    private EditContext editContext = null!;
+
+    [EditorRequired, Parameter] public TModel Model { get; set; } = default!;
+    [EditorRequired, Parameter] public string Label { get; set; } = null!;
+    [EditorRequired, Parameter] public EventCallback OnValidSubmit { get; set; }
+    [EditorRequired, Parameter] public EventCallback ReturnAction { get; set; }
+
+    [Inject] private IDialogService DialogService { get; set; } = null!;
+
+    public bool FormPostedSuccessfully { get; set; }
+
+    protected override void OnInitialized()
+    {
+        editContext = new(Model);
+    }
+
+}
